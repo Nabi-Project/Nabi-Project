@@ -4,70 +4,99 @@
 
 Nabi Project is a personal assistant PWA that takes the form of a cute little girl by the name of Nabi.
 
-## Technologies & Concepts
+## Concepts
 
 - Progressive Web Application (PWA)
 - Single Page Application (SPA)
-- Containerized MicroServices (Docker)
-- Reverse Proxy (Nginx)
+- Containerized MicroServices
+- Reverse Proxy
 
-## Network Topology
+## Technologies
 
-![Topology](docs/Images/Network-Topology.png)
+- Nginx
+- React
+- JavaScript
+- Rasa
+- Python
+- ESPnet
 
 ## Modules
 
 | Module | Category  | Programming Language | Sdk | Docker |
 | ------ | --------- | -------------------- | -------- | ------ |
 |Reverse Proxy|Support Tool|-|-|[nginx:alpine](https://hub.docker.com/_/nginx)|
-|UI-Appearance|Consumer|Javascript|Node/React|[nginx:alpine](https://hub.docker.com/_/nginx)|
-|API-Voice|Service|`TBD`|`TBD`|`TBD`|
-|API-Brain|Service|`TBD`|`TBD`|`TBD`|
+|Web Service|Service|JavaScript|React|[nginx:alpine](https://hub.docker.com/_/nginx)|
+|Listening Service|Service|-|Rasa|`TBD`|
+|Action Server|Utility Service|Python|Rasa|`TBD`|
+|Speaking Service|Service|-|ESPnet|`TBD`|
 
 ## API by Service
 
-| Brain | Voice |
-| ----- | ----- |
-| `TBD` | `TBD` |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
+| Web Service | Listening Service   | Speaking Service   |
+| ----------- | ------------------- | ------------------ |
+| GET `/*`    | POST `/nabi/listen` | POST `/nabi/speak` |
+
+## Network Topology Diagram
+
+![Topology](docs/Images/Network-Topology.png)
 
 ## Requirements
 
-### UI-Appearance
+### Web Service
 
-- Interpret spoken English Queries into text Queries.
-- Interpret spoken Japanese Queries into text Queries.
-- Display Nabi's Model.
-- Directly interact with Nabi's Model.
-- Animate Nabi's Model as a query response.
-- Lip Sync Nabi's Model to match Nabi's Voice output.
+#### WS: Basic
 
-### API-Voice
+- [x] Interpret spoken English Queries as text Queries.
+- [x] Interpret spoken Japanese Queries as text Queries.
+- [ ] Display Nabi's Model.
+- [ ] Animate Nabi's Model in Response to tap/click.
 
-- Read text out loud with Nabi's unique voice.
+#### WS: After LS
 
-### API-Brain
+- [ ] Animate Nabi's Model (according to message response).
 
-- Respond appropriately to Queries in English.
-- Respond appropriately to Queries in Japanese.
-- Search the internet using text.
-- Search the internet using images.
-- Perform machine translation.
-- Perform lookups in a JP<->EN dictionary.
-- Interact with Gmail/Outlook (client device).
-- Interact with Discord (client device).
-- Manage SMS Messages (client device).
-- Manage Line Messages (client device).
-- Set/manage alarms.
-- Create/manage reminders.
-- Create/manage todo items.
+#### WS: After SS
+
+- [ ] Lip Sync Nabi's Model to match Nabi's Voice output.
+- [ ] Play Pre-Generated Voice Clip in Response to tap/click
+
+### Speaking Service
+
+#### SS: Basic
+
+- [ ] Read text out loud with Nabi's unique voice.
+
+### Listening Service
+
+#### LS: Basic
+
+- [ ] Respond appropriately to Queries in English.
+- [ ] Respond appropriately to Queries in Japanese.
+
+#### LS: Ideas
+
+- [ ] Integrate with Discord.
+
+### Action Server
+
+#### AS: Basic
+
+- [ ] Search the internet using text.
+- [ ] Perform machine translation.
+- [ ] Perform lookups in a JP<->EN dictionary.
+- [ ] Set/manage alarms.
+- [ ] Create/manage reminders.
+- [ ] Create/manage todo items.
+
+#### AS: Ideas
+
+- [ ] Search the internet using images.
+- [ ] Manage Email.
+- [ ] Manage SMS Messages (client device).
 
 ## Running the Project
 
-`TODO (Most likely a DockerCompose File in the /build Directory)`
+Run `docker-compose up -d` from the `prod` folder in the [scripts](https://github.com/Nabi-Project/scripts) Repo
 
 ## Licence
 
