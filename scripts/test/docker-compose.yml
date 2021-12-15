@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  reverse-proxy:
+    image: reverse-proxy
+    build: ../../Reverse-Proxy
+    container_name: reverse-proxy
+    ports:
+      - "8080:80"
+    networks: 
+      - pwa-network
+      - nlu-network
+      - tts-network
+
+  web-service:
+    image: web-service
+    build: ../../Nabi-UI
+    container_name: web-service
+    networks:
+      - pwa-network
+  listening-service:
+    image: listening-service
+    build: ../../Nabi-Brain
+    container_name: listening-service
+    networks:
+      - nlu-network
+      - rasa-network
+  # speaking-service:
+  #   image: speaking-service
+  #   build: ../../Nabi-Voice
+  #   container_name: speaking-service
+  #   networks:
+  #     - tts-network
+
+  action-server:
+    image: action-server
+    build: ../../Nabi-Brain/actions
+    container_name: action-server
+    networks:
+      - rasa-network
+
+networks: 
+  pwa-network:
+  nlu-network:
+  tts-network:
+  rasa-network:
