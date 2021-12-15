@@ -3,7 +3,7 @@ version: "3.8"
 services:
   tunneling-utility:
     image: tunneling-utility
-    build: ../../Tunneling-Utility
+    build: ../../utility/Tunneling-Utility
     container_name: tunneling-utility
     environment:
       LT_SUBDOMAIN: nabi-prod-3dlv29zr3ghklrd9
@@ -13,7 +13,7 @@ services:
       - rp-network
   reverse-proxy:
     image: reverse-proxy
-    build: ../../Reverse-Proxy
+    build: ../../utility/Reverse-Proxy
     container_name: reverse-proxy
     networks: 
       - pwa-network
@@ -23,27 +23,27 @@ services:
 
   web-service:
     image: web-service
-    build: ../../Nabi-UI
+    build: ../../src/Nabi-UI
     container_name: web-service
     networks:
       - pwa-network
   listening-service:
     image: listening-service
-    build: ../../Nabi-Brain
+    build: ../../src/Nabi-Brain
     container_name: listening-service
     networks:
       - nlu-network
       - rasa-network
   # speaking-service:
   #   image: speaking-service
-  #   build: ../../Nabi-Voice
+  #   build: ../../src/Nabi-Voice
   #   container_name: speaking-service
   #   networks:
   #     - tts-network
 
   action-server:
     image: action-server
-    build: ../../Nabi-Brain/actions
+    build: ../../src/Nabi-Brain/actions
     container_name: action-server
     networks:
       - rasa-network
