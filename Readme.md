@@ -2,25 +2,21 @@
 
 This Repo Contains the Build and Helper Scripts for Nabi Project.
 
-## Deploying the Project
+## Building, Running, & Deploying the Project
 
-### Testing
+- RUN `./deploy.sh` in this directory.
 
-- RUN `./deploy-test.sh` in this directory
+``` HEREDOC
+Usage: deploy.sh [OPTIONS] [ENV]
 
-### `TODO:` Development
+  Deployment Script for Nabi Project
 
-- `TODO:` RUN `docker-compose up -d` in the [dev](dev) directory.
+  [ENV]:
+    t | test                Deploy Locally
+    d | dev                 Deploy the Dev Build
+    p | prod                Deploy the Final Release
 
-### `TODO:` Production
-
-- `TODO:` RUN `docker-compose up -d` in the [prod](prod) directory.
-
-## `TODO:` Monitoring the Running Project (Dev & Prod)
-
-- `TODO:` RUN `docker-compose logs -f` in this directory.
-- `TODO:` You can stop monitoring by using Ctrl+C or closing the console window
-
-## `TODO:` Safely Stopping the Running Project (Dev & Prod)
-
-- `TODO:` RUN `docker-compose down` in this directory.
+  optional arguments:
+    -b, --build             Re-Build Existing Images
+    -h, --help              Show this help message and exit
+```
