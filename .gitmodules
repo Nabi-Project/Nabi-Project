@@ -1,3 +1,21 @@
 [submodule "scripts"]
 	path = scripts
 	url = git@github.com:Nabi-Project/scripts.git
+[submodule "utility/Tunneling-Utility"]
+	path = utility/Tunneling-Utility
+	url = git@github.com:Nabi-Project/Tunneling-Utility.git
+[submodule "utility/Reverse-Proxy"]
+	path = utility/Reverse-Proxy
+	url = git@github.com:Nabi-Project/Reverse-Proxy.git
+[submodule "src/Nabi-UI"]
+	path = src/Nabi-UI
+	url = git@github.com:Nabi-Project/Nabi-UI.git
+[submodule "src/Nabi-Brain"]
+	path = src/Nabi-Brain
+	url = git@github.com:Nabi-Project/Nabi-Brain.git
+[submodule "src/Nabi-Voice"]
+	path = src/Nabi-Voice
+	url = git@github.com:Nabi-Project/Nabi-Voice.git
+[submodule "assets"]
+	path = assets
+	url = git@github.com:Nabi-Project/Nabi-Visuals.git
