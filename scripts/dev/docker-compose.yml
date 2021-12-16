@@ -34,12 +34,12 @@ services:
     networks:
       - nlu-network
       - rasa-network
-  # speaking-service:
-  #   image: speaking-service
-  #   build: ../../src/Nabi-Voice
-  #   container_name: speaking-service
-  #   networks:
-  #     - tts-network
+  speaking-service:
+    image: speaking-service
+    build: ../../src/Nabi-Voice/service
+    container_name: speaking-service
+    networks:
+      - tts-network
 
   action-server:
     image: action-server

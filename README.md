@@ -15,9 +15,9 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 
 ## Technologies
 
-- [Nginx](https://www.nginx.com/), [React](https://reactjs.org/), JavaScript
-- [Rasa](https://rasa.com/), [ESPnet](https://github.com/espnet/espnet), Python
 - Bash Scripting
+- [Nginx](https://www.nginx.com/), [React](https://reactjs.org/), JavaScript
+- [Rasa](https://rasa.com/), [ESPnet](https://github.com/espnet/espnet), [Flask](https://flask.palletsprojects.com/en/2.0.x/), Python
 
 ## Modules
 
@@ -27,7 +27,7 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 |Reverse Proxy|Support Tool|-|-|[nginx:alpine](https://hub.docker.com/_/nginx)|
 |Web Service|Service|JavaScript|React|[nginx:alpine](https://hub.docker.com/_/nginx)|
 |Listening Service|Service|-|-|[rasa:3.0.2-full](https://hub.docker.com/r/rasa/)|
-|Speaking Service|Service|Python|ESPnet|[python:`TODO`](https://hub.docker.com/_/python/)|
+|Speaking Service|Service|Python|Flask, ESPnet|[python:`TODO`](https://hub.docker.com/_/python/)|
 |Action Server|Service Utility|Python|Rasa|[rasa/rasa-sdk:3.0.2](https://hub.docker.com/r/rasa/rasa-sdk)|
 
 ## API Endpoints by Service
