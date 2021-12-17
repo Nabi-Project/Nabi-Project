@@ -44,42 +44,42 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 
 ### Web Service
 
-#### WS: Basic
+Basic
 
 - [x] Interpret spoken English Queries as text Queries.
 - [x] Interpret spoken Japanese Queries as text Queries.
 - [ ] Display Nabi's Model.
 - [ ] Animate Nabi's Model in Response to tap/click.
 
-#### WS: After LS
+Implement After Listening Service
 
 - [ ] Animate Nabi's Model (according to message response).
 
-#### WS: After SS
+Implement After Listening & Speaking Services
 
 - [ ] Lip Sync Nabi's Model to match Nabi's Voice output.
 - [ ] Play Pre-Generated Voice Clip in Response to tap/click
 
 ### Speaking Service
 
-#### SS: Basic
+Basic
 
-- [ ] Read text out loud with Nabi's unique voice.
+- [x] Read text out loud with Nabi's unique voice.
 
 ### Listening Service
 
-#### LS: Basic
+Basic
 
 - [x] Respond appropriately to Queries in English.
 - [ ] Respond appropriately to Queries in Japanese.
 
-#### LS: Ideas
+Ideas
 
 - [ ] Integrate with Discord.
 
 ### Action Server
 
-#### AS: Basic
+Basic
 
 - [ ] Search the internet using text.
 - [ ] Perform machine translation.
@@ -88,7 +88,7 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 - [ ] Create/manage reminders.
 - [ ] Create/manage todo items.
 
-#### AS: Ideas
+Ideas
 
 - [ ] Search the internet using images.
 - [ ] Manage Email.
