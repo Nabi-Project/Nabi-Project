@@ -4,6 +4,11 @@
 
 Nabi Project is a personal assistant PWA that takes the form of a cute little girl by the name of Nabi.
 
+| ![Message-1](docs/Screenshots/Message-1.png) | ![Message-2](docs/Screenshots/Message-2.png) | ![Message-3](docs/Screenshots/Message-3.png) |
+| -- | -- | -- |
+| ![Menu-1](docs/Screenshots/Menu-1.png) | ![Settings-1](docs/Screenshots/Settings-1.png) | ![Settings-2](docs/Screenshots/Settings-2.png) |
+|![Emote-1](docs/Screenshots/Emote-1.png) | ![Message-Settings-1](docs/Screenshots/Message-Settings-1.png) | ![Message-Settings-2](docs/Screenshots/Message-Settings-2.png) |
+
 ## Concepts
 
 - Reverse Proxy
