@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  tunneling-utility-prod:
+    image: registry.shuruni.com:5000/tunneling-utility-prod
+    container_name: tunneling-utility-prod
+    networks: 
+      - rp-network
+  reverse-proxy:
+    image: registry.shuruni.com:5000/reverse-proxy
+    container_name: reverse-proxy
+    networks: 
+      - pwa-network
+      - nlu-network
+      - tts-network
+      - rp-network
+
+  web-service:
+    image: registry.shuruni.com:5000/web-service
+    container_name: web-service
+    networks:
+      - pwa-network
+  listening-service:
+    image: registry.shuruni.com:5000/listening-service
+    container_name: listening-service
+    networks:
+      - nlu-network
+      - rasa-network
+  action-service:
+    image: registry.shuruni.com:5000/action-service
+    container_name: action-server
+    networks:
+      - rasa-network
+  speaking-service:
+    image: registry.shuruni.com:5000/speaking-service
+    container_name: speaking-service
+    networks:
+      - tts-network
+
+networks: 
+  rp-network:
+  pwa-network:
+  nlu-network:
+  tts-network:
+  rasa-network:
