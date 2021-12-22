@@ -1,18 +1,14 @@
 version: "3.8"
 
 services:
-  tunneling-utility:
-    image: tunneling-utility
-    build: ../../utility/Tunneling-Utility
-    container_name: tunneling-utility
-    environment:
-      LT_SUBDOMAIN: nabi-dev-v1mbz08vr8f6p3hn
-      LT_HOST: reverse-proxy
-      LT_PORT: 80
+  tunneling-utility-dev:
+    image: registry.shuruni.com:5000/tunneling-utility-dev
+    build: ../../utility/Tunneling-Utility/dev
+    container_name: tunneling-utility-dev
     networks: 
       - rp-network
   reverse-proxy:
-    image: reverse-proxy
+    image: registry.shuruni.com:5000/reverse-proxy
     build: ../../utility/Reverse-Proxy
     container_name: reverse-proxy
     networks: 
@@ -22,31 +18,30 @@ services:
       - rp-network
 
   web-service:
-    image: web-service
+    image: registry.shuruni.com:5000/web-service
     build: ../../src/Nabi-UI
     container_name: web-service
     networks:
       - pwa-network
   listening-service:
-    image: listening-service
+    image: registry.shuruni.com:5000/listening-service
     build: ../../src/Nabi-Brain
     container_name: listening-service
     networks:
       - nlu-network
       - rasa-network
-  speaking-service:
-    image: speaking-service
-    build: ../../src/Nabi-Voice/service
-    container_name: speaking-service
-    networks:
-      - tts-network
-
-  action-server:
-    image: action-server
+  action-service:
+    image: registry.shuruni.com:5000/action-service
     build: ../../src/Nabi-Brain/actions
     container_name: action-server
     networks:
       - rasa-network
+  speaking-service:
+    image: registry.shuruni.com:5000/speaking-service
+    build: ../../src/Nabi-Voice/service
+    container_name: speaking-service
+    networks:
+      - tts-network
 
 networks: 
   rp-network:

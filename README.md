@@ -11,6 +11,7 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 
 ## Concepts
 
+- Argo Tunneling
 - Reverse Proxy
 - Single Page Application (SPA)
 - Progressive Web Application (PWA)

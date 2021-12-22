@@ -5,9 +5,14 @@ function usage()
 {
   cat << HEREDOC
 
-  Usage: $progname [OPTIONS] [ENV]
+  Usage: $progname [ACTION] [ENV] [OPTIONS]
 
   Deployment Script for Nabi Project
+
+  [ACTION]:
+    build                   Creates a new build of the images used in the Application
+    push                    Push the Latest build of the images used in the Application
+    run                     Spins up the Application for Deployment
 
   [ENV]:
     t | test                Deploy Locally
@@ -15,14 +20,12 @@ function usage()
     p | prod                Deploy the Final Release
 
   optional arguments:
-    -b, --build             Re-Build Existing Images
     -h, --help              Show this help message and exit
 
 HEREDOC
 }
 progname=$(basename $0)
 
-REBUILD=false;
 # Argument Parsing
 POSITIONAL=()
 while [[ $# -gt 0 ]]; do
@@ -31,11 +34,6 @@ while [[ $# -gt 0 ]]; do
     -h|--help) 
       usage;
       exit;
-      ;;
-    -b|--build) 
-      REBUILD=true;
-      shift # past argument
-      shift # past value
       ;;
     *)      # unknown option
       POSITIONAL+=("$1") # save it in an array for later
@@ -46,14 +44,19 @@ done
 set -- "${POSITIONAL[@]}" # restore positional parameters
 
 # Begin Application
-env="$1"
+action="$1"
+env="$2"
 
-function setup() {
-  if [ "$REBUILD" = true ]; then
-    sudo docker-compose up -d --build
-  else
-    sudo docker-compose up -d
-  fi
+function build-images() {
+  sudo docker-compose build
+}
+
+function push-images() {
+  sudo docker-compose push
+}
+
+function run-application() {
+  sudo docker-compose up -d
   sudo docker-compose logs -f
 }
 
@@ -64,20 +67,39 @@ function teardown() {
   exit
 }
 
+function runAction() {
+  case $action in
+    build)
+      build-images
+      ;;
+    push)
+      push-images
+      ;;
+    run)
+      run-application
+      ;;
+    *)
+      usage;
+      exit;
+      ;;
+  esac
+}
+
+
 trap teardown EXIT
 
 case $env in
 	t | test)
     cd "test"
-    setup
+    runAction
 		;;
 	d | dev | development)
     cd "dev"
-    setup
+    runAction
 		;;
 	p | prod | production)
     cd "prod"
-    setup
+    runAction
 		;;
 	*)
 		usage;
