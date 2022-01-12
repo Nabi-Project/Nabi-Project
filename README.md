@@ -1,4 +1,4 @@
-# ナビProject
+# Nabi Project
 
 ## Introduction: What is Nabi Project?
 
@@ -21,7 +21,7 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 
 ## Technologies
 
-- Bash Scripting
+- [Docker](https://www.docker.com/), [Cloudflare](https://www.cloudflare.com/), Bash Scripting
 - [Nginx](https://www.nginx.com/), [React](https://reactjs.org/), JavaScript
 - [Rasa](https://rasa.com/), [ESPnet](https://github.com/espnet/espnet), [Flask](https://flask.palletsprojects.com/en/2.0.x/), Python
 
@@ -29,7 +29,7 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 
 | Module | Category  | Programming Language | Sdk | Docker |
 | ------ | --------- | -------------------- | -------- | ------ |
-|Tunneling Utility|Support Tool|-|-|[node:16-alpine](https://hub.docker.com/_/node)|
+|Tunneling Utility|Support Tool|-|-|[cloudflared](https://hub.docker.com/r/cloudflare/cloudflared)|
 |Reverse Proxy|Support Tool|-|-|[nginx:alpine](https://hub.docker.com/_/nginx)|
 |Web Service|Service|JavaScript|React|[nginx:alpine](https://hub.docker.com/_/nginx)|
 |Listening Service|Service|-|-|[rasa:3.0.2-full](https://hub.docker.com/r/rasa/)|
@@ -42,9 +42,9 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 | ----------- | ------------------- | ------------------ |
 | GET `/*`    | POST `/nabi/listen` | POST `/nabi/speak` |
 
-## Network Topology Diagram
+## Network Topography Diagram
 
-![Topology](docs/Images/Network-Topology.png)
+![Topography](docs/Images/Network-Topography.png)
 
 ## Requirements
 
@@ -112,12 +112,12 @@ INSTALL [docker](https://docs.docker.com/engine/install/) & [docker-compose](htt
 ### Development Server Deploy
 
 - Run `./deploy.sh dev` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
-- Visit at [The Development URL](https://nabi-dev-v1mbz08vr8f6p3hn.loca.lt)
+- Visit at [dev.なび.app](https://dev.なび.app)
 
 ### Production Server Deploy
 
 - Run `./deploy.sh prod` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
-- Visit at [The Production URL](https://nabi-prod-3dlv29zr3ghklrd9.loca.lt)
+- Visit at [なび.app](https://なび.app)
 
 ## License
 
