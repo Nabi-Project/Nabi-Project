@@ -54,16 +54,15 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 
 Basic
 
-- [x] Interpret spoken English Queries as text Queries.
 - [x] Interpret spoken Japanese Queries as text Queries.
 - [ ] Display Nabi's Model.
 - [ ] Animate Nabi's Model in Response to tap/click.
 
-Implement After Listening Service
+Requires Listening Service:
 
 - [ ] Animate Nabi's Model (according to message response).
 
-Implement After Listening & Speaking Services
+Requires Listening & Speaking Services
 
 - [ ] Lip Sync Nabi's Model to match Nabi's Voice output.
 - [ ] Play Pre-Generated Voice Clip in Response to tap/click
@@ -78,8 +77,7 @@ Basic
 
 Basic
 
-- [x] Respond appropriately to Queries in English.
-- [ ] Respond appropriately to Queries in Japanese.
+- [x] Respond appropriately to Queries in Japanese.
 
 Ideas
 
@@ -89,6 +87,7 @@ Ideas
 
 Basic
 
+- [x] Perform minor Chit-chat
 - [ ] Search the internet using text.
 - [ ] Perform machine translation.
 - [ ] Perform lookups in a JP<->EN dictionary.
@@ -106,19 +105,21 @@ Ideas
 
 INSTALL [docker](https://docs.docker.com/engine/install/) & [docker-compose](https://docs.docker.com/compose/install/) then run the command relevant for your deployment environment.
 
+*In the future it is planned to rework deployment to utilize a helm chart for a scalable Kubernetes deploy as opposed to using docker-compose for a standalone docker deploy.*
+
 ### Local Test Deploy
 
-- Run `./deploy.sh test` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
+- Run `./deploy.sh run test` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
 - Visit at [localhost:8080](http://localhost:8080)
 
 ### Development Server Deploy
 
-- Run `./deploy.sh dev` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
+- Run `./deploy.sh run dev` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
 - Visit at [dev.なび.app](https://dev.なび.app)
 
 ### Production Server Deploy
 
-- Run `./deploy.sh prod` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
+- Run `./deploy.sh run prod` in the [scripts](https://github.com/Nabi-Project/scripts) Repo
 - Visit at [なび.app](https://なび.app)
 
 ## License
