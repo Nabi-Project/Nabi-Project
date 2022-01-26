@@ -4,11 +4,6 @@
 
 Nabi Project is a personal assistant PWA that takes the form of a cute little girl by the name of Nabi.
 
-| ![Message-1](docs/Screenshots/Message-1.png) | ![Message-2](docs/Screenshots/Message-2.png) | ![Message-3](docs/Screenshots/Message-3.png) |
-| -- | -- | -- |
-| ![Menu-1](docs/Screenshots/Menu-1.png) | ![Settings-1](docs/Screenshots/Settings-1.png) | ![Settings-2](docs/Screenshots/Settings-2.png) |
-|![Emote-1](docs/Screenshots/Emote-1.png) | ![Message-Settings-1](docs/Screenshots/Message-Settings-1.png) | ![Message-Settings-2](docs/Screenshots/Message-Settings-2.png) |
-
 ## Concepts
 
 - Argo Tunneling
@@ -24,6 +19,13 @@ Nabi Project is a personal assistant PWA that takes the form of a cute little gi
 - [Docker](https://www.docker.com/), [Cloudflare](https://www.cloudflare.com/), Bash Scripting
 - [Nginx](https://www.nginx.com/), [React](https://reactjs.org/), JavaScript
 - [Rasa](https://rasa.com/), [ESPnet](https://github.com/espnet/espnet), [Flask](https://flask.palletsprojects.com/en/2.0.x/), Python
+
+## Screenshots
+
+| ![Message-1](docs/Screenshots/Message-1.png) | ![Message-2](docs/Screenshots/Message-2.png) | ![Message-3](docs/Screenshots/Message-3.png) | ![Message-4](docs/Screenshots/Message-4.png) |
+|-|-|-|-|
+| ![Message-5](docs/Screenshots/Message-5.png) | ![Message-6](docs/Screenshots/Message-6.png) | ![Menu-1](docs/Screenshots/Menu-1.png) | ![Emote-1](docs/Screenshots/Emote-1.png) |
+| ![Settings-1](docs/Screenshots/Settings-1.png) | ![Settings-2](docs/Screenshots/Settings-2.png) | ![Settings-3](docs/Screenshots/Settings-3.png) | ![Settings-4](docs/Screenshots/Settings-4.png) |
 
 ## Modules
 
