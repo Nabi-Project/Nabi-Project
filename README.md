@@ -2,7 +2,7 @@
 
 ## Introduction: What is Nabi Project?
 
-Nabi Project is a personal assistant PWA that takes the form of a cute little girl by the name of Nabi.
+A personal assistant Progressive Web App (PWA) featuring an anime style avatar. The application leverages Natural Language Understanding for parsing user queries, and employs a customized speech model for TTS.
 
 ## Concepts
 

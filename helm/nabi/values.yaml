@@ -2,13 +2,29 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+tunnel:
+  # Each tunnel has an associated "credentials file" which authorizes machines
+  # to run the tunnel. cloudflared will read this file from its local filesystem,
+  # and it'll be stored in a k8s secret.
+  #
+  # By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
+  # when you run `cloudflared tunnel create`. You can move it into a secret by using:
+  # ```sh
+  # kubectl create secret generic tunnel-credentials \
+  # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
+  # ```
+  name: "3dae053b-d254-4eaa-af64-9a67d495ca91"
+  secretName: "nabi-staging-tunnel-credentials"
+  hostName: "staging.nabi.hikaru.app"
+  service: "https://nabi-ingress-nginx-controller:443"
+
 replicaCount: 1
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: registry.internal.hikaru.app:443/cloudflared-tunneling-utility
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "staging"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -80,3 +96,121 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+#############################################
+# Ingress Nginx
+############################################
+ingress-nginx:
+  controller:
+    ingressClassResource:
+      # -- Name of the ingressClass
+      name: nabi-project-nginx
+
+    # -- For backwards compatibility with ingress.class annotation, use ingressClass.
+    # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
+    ingressClass: nabi-project-nginx
+
+#############################################
+# Nabi UI
+#############################################
+nabi-ui:
+  image:
+    tag: "staging"
+  ingress:
+    className: nabi-project-nginx
+
+#############################################
+# Nabi Brain
+#############################################
+nabi-brain:
+
+  # Default values for rasa.
+  rasa:
+    ## Define the rasa image to work with
+    image:
+      # -- Rasa Open Source image tag to use
+      tag: "staging"
+
+    applicationSettings:
+      # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
+      initialModel: "https://minio.internal.hikaru.app/nabi-brain/models/nabi-model-v2022-05-04_11-39-28.tar.gz"
+
+    ## Configure the ingress resource that allows you to access the
+    ## deployment installation. Set up the URL
+    ## ref: http://kubernetes.io/docs/user-guide/ingress/
+    ingress:
+      # -- Set to true to enable ingress
+      enabled: true
+
+      # -- Ingress annotations
+      annotations:
+        kubernetes.io/ingress.class: nabi-project-nginx
+        nginx.ingress.kubernetes.io/rewrite-target: /webhooks/rest/webhook/$2
+        cert-manager.io/cluster-issuer: letsencrypt-issuer
+
+      # -- Labels to add to the ingress
+      labels: {}
+
+      # -- Ingress Path type
+      ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
+      pathType: Prefix
+
+      # -- Ingress path
+      path: /api/brain(/|$)(.*)
+
+      # -- Hostname used for the ingress
+      hostname: staging.nabi.hikaru.app
+
+      # -- TLS configuration for ingress
+      ## See: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+      tls:
+      - secretName: nabi-staging-tls-cert
+        hosts:
+          - staging.nabi.hikaru.app
+  
+  # Default values for rasa action server.
+  rasa-action-server:
+    ## Define the rasa action server image to work with
+    image:
+      # -- Action Server image tag to use
+      tag: "staging"
+    
+    
+
+#############################################
+# Nabi Voice
+#############################################
+nabi-voice:
+  # -- Define Nabi Voice image to work with
+  image:
+    # -- Nabi Voice image tag to use
+    tag: "staging"
+
+  ## Configure the ingress resource that allows you to access the
+  ## deployment installation. Set up the URL
+  ## ref: http://kubernetes.io/docs/user-guide/ingress/
+  ingress:
+    enabled: true
+    
+    # -- Ingress Controller Class Name
+    className: nabi-project-nginx
+    
+    # -- Ingress annotations
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+      cert-manager.io/cluster-issuer: letsencrypt-issuer
+    
+    # Hosts used for the ingress
+    hosts:
+      - host: staging.nabi.hikaru.app
+        paths:
+          - path: /api/voice(/|$)(.*)
+            pathType: Prefix
+    
+    # -- TLS configuration for ingress
+    ## See: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls   
+    tls:
+    - secretName: nabi-staging-tls-cert
+      hosts:
+        - staging.nabi.hikaru.app
