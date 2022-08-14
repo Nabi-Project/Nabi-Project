@@ -2,215 +2,119 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-tunnel:
-  # Each tunnel has an associated "credentials file" which authorizes machines
-  # to run the tunnel. cloudflared will read this file from its local filesystem,
-  # and it'll be stored in a k8s secret.
-  #
-  # By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
-  # when you run `cloudflared tunnel create`. You can move it into a secret by using:
-  # ```sh
-  # kubectl create secret generic tunnel-credentials \
-  # --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
-  # ```
-  name: "3dae053b-d254-4eaa-af64-9a67d495ca91"
-  secretName: "nabi-staging-tunnel-credentials"
-  hostName: "staging.nabi.hikaru.app"
-  service: "https://nabi-ingress-nginx-controller:443"
+global:
+  deployConfig:
+    environment: "staging"
+    baseHostName: "nabi.hikaru.app"
+    ingressClassName: "nginx"
+    clusterIssuer: "letsencrypt-issuer"
 
-replicaCount: 1
-
-image:
-  repository: registry.internal.hikaru.app:443/cloudflared-tunneling-utility
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "staging"
-
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
+############################################
+# Nabi Cloudflared
+############################################
+nabi-cloudflared:
   enabled: false
-  className: ""
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: chart-example.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  applicationSettings:
+    # The Name of the tunnel you want to run (Tunnel ID)
+    name: "3dae053b-d254-4eaa-af64-9a67d495ca91"
+    # The Name of the secret that you have already stored your credentials in:
+    # NOTE: 
+    #   Each tunnel has an associated "credentials file" which authorizes machines
+    #   to run the tunnel. cloudflared will read this file from its local filesystem,
+    #   and it'll be stored in a k8s secret.
+    #
+    #   By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
+    #   when you run `cloudflared tunnel create`. You can move it into a secret by using:
+    #   ```sh
+    #   kubectl create secret generic tunnel-credentials \
+    #   --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
+    #   ```
+    secretName: "nabi-staging-tunnel-credentials"
+    # The Service URL of the Ingress Controller that Cloudflared should route traffic to (see configmap.yaml for more details)
+    service: "https://nabi-ingress-nginx-controller:443"
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
-
-#############################################
+############################################
 # Ingress Nginx
 ############################################
 ingress-nginx:
+  enabled: false
   controller:
     ingressClassResource:
-      # -- Name of the ingressClass
+      # Name of the ingressClass
       name: nabi-project-nginx
 
-    # -- For backwards compatibility with ingress.class annotation, use ingressClass.
+    # For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
     ingressClass: nabi-project-nginx
 
 #############################################
-# Nabi UI
+# Nabi PWA
 #############################################
-nabi-ui:
+nabi-pwa:
   image:
-    tag: "staging"
-  ingress:
-    className: nabi-project-nginx
-
-#############################################
-# Nabi Brain
-#############################################
-nabi-brain:
-
-  # Default values for rasa.
-  rasa:
-    ## Define the rasa image to work with
-    image:
-      # -- Rasa Open Source image tag to use
-      tag: "staging"
-
-    applicationSettings:
-      # -- Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
-      initialModel: "https://minio.internal.hikaru.app/nabi-brain/models/nabi-model-v2022-05-04_11-39-28.tar.gz"
-
-    ## Configure the ingress resource that allows you to access the
-    ## deployment installation. Set up the URL
-    ## ref: http://kubernetes.io/docs/user-guide/ingress/
-    ingress:
-      # -- Set to true to enable ingress
-      enabled: true
-
-      # -- Ingress annotations
-      annotations:
-        kubernetes.io/ingress.class: nabi-project-nginx
-        nginx.ingress.kubernetes.io/rewrite-target: /webhooks/rest/webhook/$2
-        cert-manager.io/cluster-issuer: letsencrypt-issuer
-
-      # -- Labels to add to the ingress
-      labels: {}
-
-      # -- Ingress Path type
-      ## Ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types
-      pathType: Prefix
-
-      # -- Ingress path
-      path: /api/brain(/|$)(.*)
-
-      # -- Hostname used for the ingress
-      hostname: staging.nabi.hikaru.app
-
-      # -- TLS configuration for ingress
-      ## See: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
-      tls:
-      - secretName: nabi-staging-tls-cert
-        hosts:
-          - staging.nabi.hikaru.app
+    repository: registry.internal.hikaru.app:443/nabi-pwa
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
   
-  # Default values for rasa action server.
-  rasa-action-server:
-    ## Define the rasa action server image to work with
-    image:
-      # -- Action Server image tag to use
-      tag: "staging"
-    
-    
+  # Should Nginx rewrite requests that come to the Endpoint?
+  rewritePath: false
+  # If So, what should it rewrite the requests to target? (annotation)
+  rewriteTarget: "/$2"
+  # The Path that this service will be taking requests at
+  #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
+  hostPath: "/"
+  # The Type of Path Matching to be used
+  hostPathType: "Prefix"
 
 #############################################
-# Nabi Voice
+# Nabi TTS
 #############################################
-nabi-voice:
-  # -- Define Nabi Voice image to work with
+nabi-tts:
+  repository: registry.internal.hikaru.app:443/nabi-tts
+  pullPolicy: IfNotPresent
   image:
-    # -- Nabi Voice image tag to use
-    tag: "staging"
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  
+  # Should Nginx rewrite requests that come to the Endpoint?
+  rewritePath: true
+  # If So, what should it rewrite the requests to target? (annotation)
+  rewriteTarget: "/$2"
+  # The Path that this service will be taking requests at
+  #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
+  hostPath: "/api/voice(/|$)(.*)"
+  # The Type of Path Matching to be used
+  hostPathType: "Prefix"
 
-  ## Configure the ingress resource that allows you to access the
-  ## deployment installation. Set up the URL
-  ## ref: http://kubernetes.io/docs/user-guide/ingress/
-  ingress:
-    enabled: true
-    
-    # -- Ingress Controller Class Name
-    className: nabi-project-nginx
-    
-    # -- Ingress annotations
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-      cert-manager.io/cluster-issuer: letsencrypt-issuer
-    
-    # Hosts used for the ingress
-    hosts:
-      - host: staging.nabi.hikaru.app
-        paths:
-          - path: /api/voice(/|$)(.*)
-            pathType: Prefix
-    
-    # -- TLS configuration for ingress
-    ## See: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls   
-    tls:
-    - secretName: nabi-staging-tls-cert
-      hosts:
-        - staging.nabi.hikaru.app
+#############################################
+# Nabi NLU
+#############################################
+nabi-nlu:
+  repository: registry.internal.hikaru.app:443/nabi-nlu
+  pullPolicy: IfNotPresent
+  image:
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  
+  # Should Nginx rewrite requests that come to the Endpoint?
+  rewritePath: true
+  # If So, what should it rewrite the requests to target? (annotation)
+  rewriteTarget: "/webhooks/rest/webhook/$2"
+  # rewriteTarget: "/model/parse/$2"
+  # The Path that this service will be taking requests at
+  #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
+  hostPath: "/api/brain(/|$)(.*)"
+  # hostPath: "/api/v0/nlu(/|$)(.*)"
+  # The Type of Path Matching to be used
+  hostPathType: "Prefix"
+
+  applicationSettings:
+    # Enable debug mode
+    debugMode: false
+    # Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
+    initialModel: "https://minio.internal.hikaru.app/nabi-brain/models/nabi-model-v2022-05-04_11-39-28.tar.gz"
+    # Start the web server API in addition to the input channel (Spec. Enables NLU Only Endpoint Requests)
+    enableAPI: true
+    # CORS for the passed origin. Default is * to allow all origins
+    cors: "*.nabi.hikaru.app"
