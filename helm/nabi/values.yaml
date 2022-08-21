@@ -6,7 +6,7 @@ global:
   deployConfig:
     environment: "staging"
     baseHostName: "nabi.hikaru.app"
-    ingressClassName: "nginx"
+    ingressClassName: "nabi-project-nginx"
     clusterIssuer: "letsencrypt-issuer"
 
 ############################################
@@ -15,37 +15,47 @@ global:
 nabi-cloudflared:
   enabled: false
   applicationSettings:
-    # The Name of the tunnel you want to run (Tunnel ID)
-    name: "3dae053b-d254-4eaa-af64-9a67d495ca91"
+    # The FQDN of the tunnel you want to run
+    tunnelHostName: ""
+    # The UUID of the tunnel you want to run (Tunnel UUID)
+    tunnelUUID: "b82e20b6-5623-42f3-b0b6-bd3b66d3980b"
     # The Name of the secret that you have already stored your credentials in:
     # NOTE: 
     #   Each tunnel has an associated "credentials file" which authorizes machines
     #   to run the tunnel. cloudflared will read this file from its local filesystem,
     #   and it'll be stored in a k8s secret.
     #
-    #   By default, the credentials file will be created under ~/.cloudflared/<tunnel ID>.json
+    #   By default, the credentials file will be created under ~/.cloudflared/<TUNNEL_UUID>.json
     #   when you run `cloudflared tunnel create`. You can move it into a secret by using:
     #   ```sh
-    #   kubectl create secret generic tunnel-credentials \
-    #   --from-file=credentials.json=/Users/yourusername/.cloudflared/<tunnel ID>.json
+    #   kubectl create -n <NAMESPACE> secret generic nabi-prod-tunnel-credentials \ 
+    #      --from-file=credentials.json=/home/<USERNAME>/.cloudflared/<TUNNEL_UUID>.json
     #   ```
     secretName: "nabi-staging-tunnel-credentials"
     # The Service URL of the Ingress Controller that Cloudflared should route traffic to (see configmap.yaml for more details)
-    service: "https://nabi-ingress-nginx-controller:443"
+    service: "https://staging.internal.nabi.hikaru.app:443"
 
 ############################################
 # Ingress Nginx
 ############################################
 ingress-nginx:
-  enabled: false
+  enabled: true
+  nameOverride: "staging-ingress"
   controller:
+    service:
+      loadBalancerIP: "192.168.0.31"
+
+    ingressClassByName: true
+
     ingressClassResource:
       # Name of the ingressClass
-      name: nabi-project-nginx
+      name: nabi-project-staging-nginx
+      enabled: true
+      controllerValue: "k8s.io/nabi-project-staging-nginx"
 
     # For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
-    ingressClass: nabi-project-nginx
+    ingressClass: nabi-project-staging-nginx
 
 #############################################
 # Nabi PWA
