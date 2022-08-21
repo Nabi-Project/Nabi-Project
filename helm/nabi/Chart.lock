@@ -1,0 +1,18 @@
+dependencies:
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 4.1.4
+- name: nabi-cloudflared
+  repository: oci://registry.internal.hikaru.app:443/helm-charts
+  version: 0.4.1
+- name: nabi-pwa
+  repository: oci://registry.internal.hikaru.app:443/helm-charts
+  version: 0.4.1
+- name: nabi-tts
+  repository: oci://registry.internal.hikaru.app:443/helm-charts
+  version: 0.4.1
+- name: nabi-nlu
+  repository: oci://registry.internal.hikaru.app:443/helm-charts
+  version: 0.4.1
+digest: sha256:75c4fd5db70307114ee9c7b34263c3886fc304dd1f1e13e2ad9b3a9c5c8e36de
+generated: "2022-08-21T05:00:47.323155924-04:00"
