@@ -110,29 +110,29 @@ Ideas
 
 ## Deploying the Project
 
-*Note: While a previous version of the repo utilized Docker and Docker-Compose in order to deploy the application, this approach lacked the flexibility and scalability that was beginning to become necessary to proceed with further additions to the project (primarily on the Machine Learning Front). As a result, support for docker-compose based deployments has been dropped for the forseeable future.*
+*Note: While a previous version of Nabi Project utilized Docker and Docker-Compose in order to deploy the application, this approach lacked the flexibility and scalability that was beginning to become necessary to proceed with further additions to the project (primarily on the Machine Learning Front). As a result, support for docker-compose based deployments has been dropped in favor of a Helm Chart based Deployment to K8s.*
 
 Nabi Project is deployed through the use of a Helm Chart and a few Helper Scripts. The deploy target in mind when developing the underlying helm chart and deploy scripts is my On-Prem Kubernetes Cluster. As a result, adaptations would likely need to be made if deploying to a K8s Cluster configured differently, though for the most part, the Helm Charts I have constructed allow for a sufficient amount of configurability that this should not pose too much of a challenge.
 
 ### Testing Environment (Namespace) Deploy
 
 - The Testing Environment is comprised purely of each of the Component Helm Charts Individually Deployed.
-- As a result, The Top Level Helm Chart maintained in this Top Level Repository is not intended to be deployed to the testing environment.
+- As a result, The Top Level Helm Chart maintained in this Repository is not intended to be deployed to the testing environment.
 - Additionally, the testing environment does not make use of the following charts:
   - ingress-nginx
-    - Instead Ingress Resources are served by an existing general use Ingress Controller in the Cluster.
+    - Instead, Ingress Resources are served by an existing general use Ingress Controller in the Cluster.
   - nabi-cloudflared
-    - The Testing Environment purely internal and is not meant to be used off the local network.
+    - The Testing Environment is purely internal and is not meant to be used off the local network.
 - Please Reference each individual Submodule Repository for details on how to deploy each chart individually.
 
 ### Staging Environment Deploy
 
-- The Staging Environment is designed to check that both internal and external connections to a deployment configuration that is known to work in the testing environment are valid before releasing to the Production Environment.
+- The Staging Environment is designed to ensure that releases that are known to work in the testing environment continue to function properly when deployed alongside the charts that handle internal and external connections (i.e. Deployed in an environment similar to Production).
 - Deployment to the Staging Environment can be done by running the [Staging Environment Deploy Script](/scripts/staging/3-deploy.sh) in the [Staging Scripts Directory](/scripts/staging) in this Repo.
 
 ### Production Environment Deploy
 
-- After verifying a deployment in the Staging Environment is ready for release, it is time to roll out a new release in the Production Environment.
+- After verifying that a deployment in the Staging Environment is functioning without issue, It should be safe to roll out a new release to the Production Environment.
 - The first step to doing this is to **Package** the Working Helm Chart and **Push** it to the Internal Registry. This can be done by Running the [Package And Push Helper Script](/scripts/package-and-push-chart.sh) in the [Scripts Directory](/scripts) in this Repo.
 - After you have successfully packaged and pushed the update to the Helm Chart, simply Bump up the version to deploy in the [Production Environment Deploy Script](/scripts/production/3-deploy.sh) and Run it in the [Production Scripts Directory](/scripts/production) in this Repo.
 
