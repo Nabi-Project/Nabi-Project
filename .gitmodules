@@ -1,20 +1,16 @@
 [submodule "utility/Tunneling-Utility"]
-	path = utility/Tunneling-Utility
-	url = ../Tunneling-Utility.git
-	branch = main
-[submodule "utility/Reverse-Proxy"]
-	path = utility/Reverse-Proxy
-	url = ../Reverse-Proxy.git
+	path = utility/Nabi-Cloudflared
+	url = ../Nabi-Cloudflared.git
 	branch = main
 [submodule "src/Nabi-UI"]
-	path = src/Nabi-UI
-	url = ../Nabi-UI.git
+	path = src/Nabi-PWA
+	url = ../Nabi-PWA.git
 	branch = main
 [submodule "src/Nabi-Brain"]
-	path = src/Nabi-Brain
-	url = ../Nabi-Brain.git
+	path = src/Nabi-NLU
+	url = ../Nabi-NLU.git
 	branch = main
-[submodule "src/Nabi-Voice"]
-	path = src/Nabi-Voice
-	url = ../Nabi-Voice.git
+[submodule "src/Nabi-TTS"]
+	path = src/Nabi-TTS
+	url = ../Nabi-TTS.git
 	branch = main
