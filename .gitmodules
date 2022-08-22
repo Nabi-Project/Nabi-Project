@@ -2,10 +2,6 @@
 	path = utility/Nabi-Cloudflared
 	url = ../Nabi-Cloudflared.git
 	branch = main
-[submodule "utility/Reverse-Proxy"]
-	path = utility/Reverse-Proxy
-	url = ../Reverse-Proxy.git
-	branch = main
 [submodule "src/Nabi-UI"]
 	path = src/Nabi-PWA
 	url = ../Nabi-PWA.git
