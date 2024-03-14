@@ -14,3 +14,7 @@
 	path = src/Nabi-TTS
 	url = ../Nabi-TTS.git
 	branch = main
+[submodule "build"]
+	path = build
+	url = ../Nabi-Build.git
+	branch = main
