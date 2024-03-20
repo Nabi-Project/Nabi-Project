@@ -66,8 +66,11 @@ ingress-nginx:
     ingressClass: nabi-project-staging-nginx
 
     admissionWebhooks:
-      patch:
-        enabled: false
+      certManager:
+        enabled: true
+    #   patch:
+    #     enabled: false
+
     
 
 #############################################
