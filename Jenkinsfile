@@ -24,5 +24,5 @@ runNabiPipeline(
   chartDependencyVersions: ["nabi-cloudflared": "latest", "nabi-pwa": "latest", "nabi-tts": "latest", "nabi-nlu": "latest"],
   skipBuild: true,
   skipPackage: false,
-  skipDeploy: true
+  skipDeploy: false
 )
