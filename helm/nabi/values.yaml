@@ -56,7 +56,7 @@ ingress-nginx:
     ingressClassResource:
       # Name of the ingressClass
       name: nabi-project-staging-nginx
-      enabled: true
+      enabled: false
       controllerValue: "k8s.io/nabi-project-staging-nginx"
 
     # For backwards compatibility with ingress.class annotation, use ingressClass.
