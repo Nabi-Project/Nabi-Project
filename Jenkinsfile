@@ -21,12 +21,7 @@ runNabiPipeline(
     --set ingress-nginx.controller.ingressClass="nabi-project-staging-nginx" \
     --set ingress-nginx.controller.ingressClassResource.enabled=true
   """,
-  chartDependencyVersions: [
-    nabi-cloudflared: "latest",
-    nabi-pwa: "latest",
-    nabi-tts: "latest",
-    nabi-nlu: "latest"
-  ],
+  chartDependencyVersions: ["nabi-cloudflared": "latest", "nabi-pwa": "latest", "nabi-tts": "latest", "nabi-nlu": "latest"],
   skipBuild: true,
   skipPackage: false,
   skipDeploy: true
