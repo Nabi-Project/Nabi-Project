@@ -4,15 +4,15 @@ dependencies:
   version: 4.1.4
 - name: nabi-cloudflared
   repository: oci://registry.internal.hikaru.app:443/helm-charts
-  version: 0.4.1
+  version: 0.4.9+BUILD.AT.Y2024.M03.D19.h20.m52.s07
 - name: nabi-pwa
   repository: oci://registry.internal.hikaru.app:443/helm-charts
-  version: 0.4.1
+  version: 0.4.24+BUILD.AT.Y2024.M03.D19.h02.m35.s54
 - name: nabi-tts
   repository: oci://registry.internal.hikaru.app:443/helm-charts
-  version: 0.4.1
+  version: 0.4.7+BUILD.AT.Y2024.M03.D19.h02.m43.s35
 - name: nabi-nlu
   repository: oci://registry.internal.hikaru.app:443/helm-charts
-  version: 0.4.1
-digest: sha256:75c4fd5db70307114ee9c7b34263c3886fc304dd1f1e13e2ad9b3a9c5c8e36de
-generated: "2022-08-21T05:00:47.323155924-04:00"
+  version: 0.4.10+BUILD.AT.Y2024.M03.D19.h03.m01.s17
+digest: sha256:b46d8b49552acb980f19c4c2b04c71288c93cae859be80017b8c6c84055be704
+generated: "2024-03-19T21:33:22.284435367-04:00"

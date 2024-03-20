@@ -1,23 +1,31 @@
-pipeline {
-  agent any
-  stages {
-    stage('build') {
-      steps {
-        echo "[DEBUG] This is a test of the Build Stage of the CI/CD Pipeline for Nabi-Project. If you are seeing this message in the Jenkins Logs for the Build Stage and it shows as successful, then the Jenkinsfile is being properly fetched from the Nabi-Project repository and interpreted."
-        echo "[WARN] From here you can begin to convert the current manual build scripts to work with this stage."
-      }
-    }
-    stage('test') {
-      steps {
-        echo "[DEBUG] This is a test of the Test Stage of the CI/CD Pipeline for Nabi-Project. If you are seeing this message in the Jenkins Logs for the Test Stage and it shows as successful, then the Jenkinsfile is being properly fetched from the Nabi-Project repository and interpreted."
-        echo "[WARN] As Test cases have not yet been written for this project, currently this stage is a placeholder and will be filled out as descisions are made on which testing strategy and libraries will be used and tests begin to be implemented."
-      }
-    }
-    stage('release') {
-      steps {
-        echo "[DEBUG] This is a test of the Release Stage of the CI/CD Pipeline for Nabi-Project. If you are seeing this message in the Jenkins Logs for the Release Stage and it shows as successful, then the Jenkinsfile is being properly fetched from the Nabi-Project repository and interpreted."
-        echo "[WARN] From here you can begin to convert the current manual release scripts to work with this stage."
-      }
-    }
-  }
-}
+@Library('nabi-project-library') _
+
+runNabiPipeline(
+  registry: 'registry.internal.hikaru.app:443', 
+  chartName: 'nabi', 
+  chartAppVersion: "${env.BUILD_TAG}", 
+  deployEnv: 'staging', 
+  additionalDeployArgs: """\
+    --set global.deployConfig.environment="staging" \
+    --set global.deployConfig.ingressClassName="nabi-project-staging-nginx" \
+    --set global.deployConfig.clusterIssuer="letsencrypt-issuer" \
+    --set nabi-cloudflared.enabled=true \
+    --set nabi-cloudflared.applicationSettings.tunnelUUID="b82e20b6-5623-42f3-b0b6-bd3b66d3980b" \
+    --set nabi-cloudflared.applicationSettings.secretName="nabi-staging-tunnel-credentials" \
+    --set nabi-cloudflared.applicationSettings.service="https://staging.internal.nabi.hikaru.app:443" \
+    --set ingress-nginx.enabled=true \
+    --set ingress-nginx.nameOverride="staging-ingress" \
+    --set ingress-nginx.controller.service.loadBalancerIP="192.168.0.13" \
+    --set ingress-nginx.controller.ingressClassResource.name="nabi-project-staging-nginx" \
+    --set ingress-nginx.controller.ingressClassResource.controllerValue="k8s.io/nabi-project-staging-nginx" \
+    --set ingress-nginx.controller.ingressClass="nabi-project-staging-nginx" \
+    --set ingress-nginx.controller.ingressClassResource.enabled=true
+  """,
+  chartDependencyVersions.nabi-cloudflared: "latest",
+  chartDependencyVersions.nabi-pwa: "latest",
+  chartDependencyVersions.nabi-tts: "latest",
+  chartDependencyVersions.nabi-nlu: "latest",
+  skipBuild: true,
+  skipPackage: false,
+  skipDeploy: true
+)
