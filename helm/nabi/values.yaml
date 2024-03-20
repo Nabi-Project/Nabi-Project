@@ -41,6 +41,8 @@ nabi-cloudflared:
 ingress-nginx:
   enabled: true
   nameOverride: "staging-ingress"
+  rbac:
+    scope: true
   controller:
     # Limit the scope of the controller to a specific namespace
     scope:
@@ -60,6 +62,7 @@ ingress-nginx:
     # For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
     ingressClass: nabi-project-staging-nginx
+    
 
 #############################################
 # Nabi PWA
