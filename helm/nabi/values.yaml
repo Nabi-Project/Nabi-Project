@@ -55,9 +55,9 @@ ingress-nginx:
 
     ingressClassResource:
       # Name of the ingressClass
-      # name: nabi-project-staging-nginx
-      enabled: false
-      # controllerValue: "k8s.io/nabi-project-staging-nginx"
+      name: nabi-project-staging-nginx
+      enabled: true
+      controllerValue: "k8s.io/nabi-project-staging-nginx"
 
     # watchIngressWithoutClass: true
 
