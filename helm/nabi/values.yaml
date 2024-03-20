@@ -59,7 +59,7 @@ ingress-nginx:
       enabled: true
       controllerValue: "k8s.io/nabi-project-staging-nginx"
 
-    # watchIngressWithoutClass: true
+    watchIngressWithoutClass: true
 
     # For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
