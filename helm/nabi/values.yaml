@@ -54,7 +54,10 @@ ingress-nginx:
     ingressClassResource:
       enabled: false
 
-    watchIngressWithoutClass: false
+    # -- Process Ingress objects without ingressClass annotation/ingressClassName field
+    # Overrides value for --watch-ingress-without-class flag of the controller binary
+    # Defaults to false
+    watchIngressWithoutClass: true
 
     # For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
