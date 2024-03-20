@@ -16,7 +16,7 @@ runNabiPipeline(
     --set ingress-nginx.enabled=true \
     --set ingress-nginx.nameOverride="staging-ingress" \
     --set ingress-nginx.controller.service.loadBalancerIP="192.168.0.13" \
-    --set ingress-nginx.controller.ingressClassResource.enabled=false
+    --set ingress-nginx.controller.ingressClassResource.enabled=false \
     --set ingress-nginx.controller.ingressClassResource.name="nabi-project-staging-nginx" \
     --set ingress-nginx.controller.ingressClassResource.controllerValue="k8s.io/nabi-project-staging-nginx" \
     --set ingress-nginx.controller.ingressClass="nabi-project-staging-nginx" \
