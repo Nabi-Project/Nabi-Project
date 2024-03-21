@@ -8,7 +8,7 @@ runNabiPipeline(
   additionalDeployArgs: """\
     --set global.deployConfig.environment="staging" \
     --set global.deployConfig.baseHostName="nabi.hikaru.app" \
-    --set global.deployConfig.ingressClassName="nabi-staging-infra-ingress-nginx" \
+    --set global.deployConfig.ingressClassName="nabi-staging-ingress-nginx" \
     --set global.deployConfig.clusterIssuer="letsencrypt-staging-issuer" \
     --set nabi-cloudflared.enabled=true \
     --set nabi-cloudflared.applicationSettings.tunnelUUID="b82e20b6-5623-42f3-b0b6-bd3b66d3980b" \
