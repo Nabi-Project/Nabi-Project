@@ -6,8 +6,8 @@ global:
   deployConfig:
     environment: "staging"
     baseHostName: "nabi.hikaru.app"
-    ingressClassName: "nabi-project-nginx"
-    clusterIssuer: "letsencrypt-issuer"
+    ingressClassName: "nabi-staging-ingress-nginx"
+    clusterIssuer: "letsencrypt-staging-issuer"
 
 ############################################
 # Nabi Cloudflared
@@ -40,36 +40,23 @@ nabi-cloudflared:
 ###############################################
 ingress-nginx:
   enabled: false
-  nameOverride: "staging-ingress"
+  nameOverride: "nabi-staging-ingress-nginx"
   rbac:
     scope: true
+
   controller:
-    # Limit the scope of the controller to a specific namespace
     scope:
       enabled: true
-      service:
-        loadBalancerIP: "192.168.0.13"
-
-    ingressClassByName: true
 
     ingressClassResource:
-      # Name of the ingressClass
-      name: nabi-project-staging-nginx
-      enabled: true
-      controllerValue: "k8s.io/nabi-project-staging-nginx"
+      name: nabi-staging-ingress-nginx
+      controllerValue: "k8s.io/nabi-staging-ingress-nginx"
 
-    # watchIngressWithoutClass: true
+    watchIngressWithoutClass: true
 
     # For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
-    ingressClass: nabi-project-staging-nginx
-
-    # admissionWebhooks:
-      # enabled: false
-    #   certManager:
-    #     enabled: true
-    #   patch:
-    #     enabled: false
+    ingressClass: nabi-staging-ingress-nginx
 
     
 
