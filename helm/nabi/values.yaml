@@ -35,11 +35,11 @@ nabi-cloudflared:
     # The Service URL of the Ingress Controller that Cloudflared should route traffic to (see configmap.yaml for more details)
     service: "https://staging.internal.nabi.hikaru.app:443"
 
-############################################
-# Ingress Nginx
-############################################
+###############################################
+# Ingress Nginx (Embedded Ingress Controller)
+###############################################
 ingress-nginx:
-  enabled: true
+  enabled: false
   nameOverride: "staging-ingress"
   rbac:
     scope: true
@@ -47,9 +47,8 @@ ingress-nginx:
     # Limit the scope of the controller to a specific namespace
     scope:
       enabled: true
-
       service:
-        loadBalancerIP: "192.168.0.31"
+        loadBalancerIP: "192.168.0.13"
 
     ingressClassByName: true
 
@@ -59,14 +58,14 @@ ingress-nginx:
       enabled: true
       controllerValue: "k8s.io/nabi-project-staging-nginx"
 
-    watchIngressWithoutClass: true
+    # watchIngressWithoutClass: true
 
     # For backwards compatibility with ingress.class annotation, use ingressClass.
     # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
     ingressClass: nabi-project-staging-nginx
 
-    admissionWebhooks:
-      enabled: false
+    # admissionWebhooks:
+      # enabled: false
     #   certManager:
     #     enabled: true
     #   patch:
