@@ -14,7 +14,8 @@ runNabiPipeline(
     --set nabi-cloudflared.applicationSettings.tunnelUUID="b82e20b6-5623-42f3-b0b6-bd3b66d3980b" \
     --set nabi-cloudflared.applicationSettings.secretName="nabi-staging-tunnel-credentials" \
     --set nabi-cloudflared.applicationSettings.service="https://staging.internal.nabi.hikaru.app:443" \
-    --set ingress-nginx.enabled=false
+    --set ingress-nginx.enabled=false \
+    --set nabi-nlu.applicationSettings.initialModel="https://minio.internal.hikaru.app/nabi-brain/models/nabi-model-v2022-05-04_11-39-28.tar.gz"
   """,
   chartDependencyVersions: ["nabi-cloudflared": "latest", "nabi-pwa": "latest", "nabi-tts": "latest", "nabi-nlu": "latest"],
   skipBuild: true,

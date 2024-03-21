@@ -6,7 +6,7 @@ global:
   deployConfig:
     environment: "staging"
     baseHostName: "nabi.hikaru.app"
-    ingressClassName: "nabi-staging-infra-ingress-nginx"
+    ingressClassName: "nabi-staging-ingress-nginx"
     clusterIssuer: "letsencrypt-staging-issuer"
 
 ############################################
@@ -40,94 +40,97 @@ nabi-cloudflared:
 ###############################################
 ingress-nginx:
   enabled: false
-  nameOverride: "nabi-staging-ingress-nginx"
-  rbac:
-    scope: true
+  # nameOverride: "nabi-staging-ingress-nginx"
+  # serviceAccount:
+  #   name: nabi-staging-ingress-nginx
 
-  controller:
-    scope:
-      enabled: true
+  # rbac:
+  #   scope: true
 
-    ingressClassResource:
-      name: nabi-staging-ingress-nginx
-      controllerValue: "k8s.io/nabi-staging-ingress-nginx"
+  # controller:
+  #   scope:
+  #     enabled: true
 
-    watchIngressWithoutClass: true
+  #   ingressClassResource:
+  #     name: nabi-staging-ingress-nginx
+  #     controllerValue: "k8s.io/nabi-staging-ingress-nginx"
 
-    # For backwards compatibility with ingress.class annotation, use ingressClass.
-    # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
-    ingressClass: nabi-staging-ingress-nginx
+  #   # watchIngressWithoutClass: true
+
+  #   # For backwards compatibility with ingress.class annotation, use ingressClass.
+  #   # Algorithm is as follows, first ingressClassName is considered, if not present, controller looks for ingress.class annotation
+  #   ingressClass: nabi-staging-ingress-nginx
 
     
 
 #############################################
 # Nabi PWA
 #############################################
-nabi-pwa:
-  image:
-    repository: registry.internal.hikaru.app:443/nabi-pwa
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+# nabi-pwa:
+#   image:
+#     repository: registry.internal.hikaru.app:443/nabi-pwa
+#     pullPolicy: IfNotPresent
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
   
-  # Should Nginx rewrite requests that come to the Endpoint?
-  rewritePath: false
-  # If So, what should it rewrite the requests to target? (annotation)
-  rewriteTarget: "/$2"
-  # The Path that this service will be taking requests at
-  #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
-  hostPath: "/"
-  # The Type of Path Matching to be used
-  hostPathType: "Prefix"
+#   # Should Nginx rewrite requests that come to the Endpoint?
+#   rewritePath: false
+#   # If So, what should it rewrite the requests to target? (annotation)
+#   rewriteTarget: "/$2"
+#   # The Path that this service will be taking requests at
+#   #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
+#   hostPath: "/"
+#   # The Type of Path Matching to be used
+#   hostPathType: "Prefix"
 
 #############################################
 # Nabi TTS
 #############################################
-nabi-tts:
-  repository: registry.internal.hikaru.app:443/nabi-tts
-  pullPolicy: IfNotPresent
-  image:
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+# nabi-tts:
+#   repository: registry.internal.hikaru.app:443/nabi-tts
+#   pullPolicy: IfNotPresent
+#   image:
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
   
-  # Should Nginx rewrite requests that come to the Endpoint?
-  rewritePath: true
-  # If So, what should it rewrite the requests to target? (annotation)
-  rewriteTarget: "/$2"
-  # The Path that this service will be taking requests at
-  #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
-  hostPath: "/api/voice(/|$)(.*)"
-  # The Type of Path Matching to be used
-  hostPathType: "Prefix"
+#   # Should Nginx rewrite requests that come to the Endpoint?
+#   rewritePath: true
+#   # If So, what should it rewrite the requests to target? (annotation)
+#   rewriteTarget: "/$2"
+#   # The Path that this service will be taking requests at
+#   #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
+#   hostPath: "/api/v0/tts(/|$)(.*)"
+#   # The Type of Path Matching to be used
+#   hostPathType: "Prefix"
 
 #############################################
 # Nabi NLU
 #############################################
-nabi-nlu:
-  repository: registry.internal.hikaru.app:443/nabi-nlu
-  pullPolicy: IfNotPresent
-  image:
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: ""
+# nabi-nlu:
+#   repository: registry.internal.hikaru.app:443/nabi-nlu
+#   pullPolicy: IfNotPresent
+#   image:
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
   
-  # Should Nginx rewrite requests that come to the Endpoint?
-  rewritePath: true
-  # If So, what should it rewrite the requests to target? (annotation)
-  rewriteTarget: "/webhooks/rest/webhook/$2"
-  # rewriteTarget: "/model/parse/$2"
-  # The Path that this service will be taking requests at
-  #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
-  hostPath: "/api/brain(/|$)(.*)"
-  # hostPath: "/api/v0/nlu(/|$)(.*)"
-  # The Type of Path Matching to be used
-  hostPathType: "Prefix"
+#   # Should Nginx rewrite requests that come to the Endpoint?
+#   rewritePath: true
+#   # If So, what should it rewrite the requests to target? (annotation)
+#   rewriteTarget: "/model/parse/$2"
+#   # rewriteTarget: "/model/parse/$2"
+#   # The Path that this service will be taking requests at
+#   #   Note: If Rewriting Requests, make sure to specify a pattern for what part to rewrite
+#   hostPath: "/api/v0/nlu(/|$)(.*)"
+#   # hostPath: "/api/v0/nlu(/|$)(.*)"
+#   # The Type of Path Matching to be used
+#   hostPathType: "Prefix"
 
-  applicationSettings:
-    # Enable debug mode
-    debugMode: false
-    # Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
-    initialModel: "https://minio.internal.hikaru.app/nabi-brain/models/nabi-model-v2022-05-04_11-39-28.tar.gz"
-    # Start the web server API in addition to the input channel (Spec. Enables NLU Only Endpoint Requests)
-    enableAPI: true
-    # CORS for the passed origin. Default is * to allow all origins
-    cors: "*.nabi.hikaru.app"
+#   applicationSettings:
+#     # Enable debug mode
+#     debugMode: false
+#     # Initial model to download and load if a model server or remote storage is not used. It has to be a URL (without auth) that points to a tar.gz file
+#     initialModel: "https://minio.internal.hikaru.app/nabi-brain/models/nabi-model-v2022-05-04_11-39-28.tar.gz"
+#     # Start the web server API in addition to the input channel (Spec. Enables NLU Only Endpoint Requests)
+#     enableAPI: true
+#     # CORS for the passed origin. Default is * to allow all origins
+#     cors: "*.nabi.hikaru.app"
