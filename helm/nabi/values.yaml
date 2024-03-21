@@ -6,7 +6,7 @@ global:
   deployConfig:
     environment: "staging"
     baseHostName: "nabi.hikaru.app"
-    ingressClassName: "nabi-staging-ingress-nginx"
+    ingressClassName: "nabi-staging-infra-ingress-nginx"
     clusterIssuer: "letsencrypt-staging-issuer"
 
 ############################################
